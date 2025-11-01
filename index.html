@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataFuse Pro - Smart Excel Automation</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+</head>
+<body>
+    <!-- Background Music Toggle -->
+    <div class="music-toggle">
+        <button id="musicBtn" title="Play Background Music">
+            <i class="fas fa-music"></i>
+        </button>
+        <audio id="bgMusic" loop>
+            <source src="https://assets.mixkit.co/sfx/preview/mixkit-chill-lofi-hip-hop-3099.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <div class="container">
+        <!-- Hero Header -->
+        <header class="hero-header">
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+                <h1>DataFuse Pro</h1>
+            </div>
+            <p class="tagline">Smart Excel & PDF Automation | Built by <strong>Shabana Begum</strong></p>
+            <div class="header-decoration"></div>
+        </header>
+
+        <!-- Tools Grid -->
+        <div class="tools-grid">
+
+            <!-- Tool 1: File Concatenator -->
+            <div class="tool-card" data-tool="1">
+                <div class="tool-icon">
+                    <i class="fas fa-file-archive"></i>
+                </div>
+                <h2>File Concatenator</h2>
+                <p class="tool-desc">Merge multiple PDF, XLSX & CSV files into one Excel.</p>
+                <div class="upload-area">
+                    <input type="file" id="concatFiles" multiple accept=".xlsx,.xls,.csv,.pdf">
+                    <button onclick="concatenateFiles()" class="action-btn">
+                        <i class="fas fa-compress-arrows-alt"></i> Concatenate
+                    </button>
+                </div>
+                <div class="info-badge">All files must have same headers</div>
+            </div>
+
+            <!-- Tool 2: Monthly PJP Generator -->
+            <div class="tool-card" data-tool="2">
+                <div class="tool-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h2>Monthly PJP Generator</h2>
+                <p class="tool-desc">Generate monthly route plan from store data.</p>
+                <div class="input-group">
+                    <input type="file" id="storeData" accept=".xlsx,.xls,.csv">
+                    <input type="month" id="pjpMonth">
+                    <button onclick="generatePJP()" class="action-btn">
+                        <i class="fas fa-magic"></i> Generate PJP
+                    </button>
+                </div>
+
+                <!-- Sample Table -->
+                <div class="sample-table">
+                    <p class="sample-title">Input Format Example:</p>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Plan</th>
+                                    <th>Store 1</th>
+                                    <th>Store 2</th>
+                                    <th>Store 3</th>
+                                    <th>Store 4</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Route-1</td>
+                                    <td>Abc Store</td>
+                                    <td>Xyz Mall</td>
+                                    <td>Pqr Center</td>
+                                    <td>Lmn Plaza</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool 3: Floater Incentive Tracker -->
+            <div class="tool-card" data-tool="3">
+                <div class="tool-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h2>Floater Incentive Tracker</h2>
+                <p class="tool-desc">Auto-schedule floaters with weekly off rotation.</p>
+                <div class="input-group">
+                    <input type="file" id="floaterData" accept=".xlsx,.xls,.csv">
+                    <input type="month" id="floaterMonth">
+                    <button onclick="generateFloaterSchedule()" class="action-btn">
+                        <i class="fas fa-clipboard-list"></i> Generate Schedule
+                    </button>
+                </div>
+
+                <!-- Sample Table -->
+                <div class="sample-table">
+                    <p class="sample-title">Input Format Example:</p>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Counter_Code</th>
+                                    <th>Store_Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CTR001</td>
+                                    <td>Abc Store</td>
+                                </tr>
+                                <tr>
+                                    <td>CTR002</td>
+                                    <td>Xyz Mall</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool 4: Catalogue XLookup -->
+            <div class="tool-card" data-tool="4">
+                <div class="tool-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h2>Catalogue XLookup</h2>
+                <p class="tool-desc">Match SOH data with catalogue using Description.</p>
+                <div class="input-group dual">
+                    <div class="file-group">
+                        <label><i class="fas fa-book"></i> Catalogue</label>
+                        <input type="file" id="catalogueFile" accept=".xlsx,.xls,.csv">
+                    </div>
+                    <div class="file-group">
+                        <label><i class="fas fa-warehouse"></i> SOH File</label>
+                        <input type="file" id="sohFile" accept=".xlsx,.xls,.csv">
+                    </div>
+                    <button onclick="performLookup()" class="action-btn full">
+                        <i class="fas fa-link"></i> Perform Lookup
+                    </button>
+                </div>
+                <div class="info-badge">Unmatched records included</div>
+            </div>
+
+        </div>
+
+        <!-- Message Area -->
+        <div id="message" class="message-box"></div>
+
+        <!-- Footer -->
+        <footer>
+            <p>Made with <i class="fas fa-heart pulse"></i> by <strong>Shabana Begum</strong> | DataFuse Pro v2.0</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Music Toggle
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        let isPlaying = false;
+
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+            } else {
+                bgMusic.play();
+                musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        });
+    </script>
+</body>
+</html>
